@@ -10,12 +10,18 @@ in PHP
 * DOM for parsing
 
 ## Usage
-	require_once('OpenGraph.php');
+	use opengraph\OpenGraph;
 
 	$graph = OpenGraph::fetch('http://www.rottentomatoes.com/m/10011268-oceans/');
-	var_dump($graph->keys());
-	var_dump($graph->schema);
 
-	foreach ($graph as $key => $value) {
-		echo "$key => $value";
+	// Or, if you already have the HTML content from a page
+	$graph = OpenGraph::parse($content);
+
+	foreach($graph as $tag => $value) {
+		echo $tag . ' => ' . $value;
 	}
+
+	var_dump($graph->title);
+
+	// Show all the keys or Open Graph tags, that have been defined on the page
+	var_dump($graph->keys());
