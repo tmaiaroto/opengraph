@@ -205,24 +205,26 @@ class OpenGraph implements \Iterator {
 						$page->_values[$key] = $content;
 					}
 				} else {
-					if(!is_array($page->_values[$parent_key])) {
-						$single_value = $page->_values[$parent_key];
-						$page->_values[$parent_key] = array(
-							array(
-								'value' => $single_value,
-								$child_key => $content
-							)
-						);
-					} else {
-						$i = count($page->_values[$parent_key]) - 1;
-						if(is_array($page->_values[$parent_key][$i])) {
-							$page->_values[$parent_key][$i][$child_key] = $content;
-						} else {
-							$single_value_in_array = $page->_values[$parent_key][$i];
-							$page->_values[$parent_key][$i] = array(
-								'value' => $single_value_in_array,
-								$child_key => $content
+					if(isset($page->_values[$parent_key])) {
+						if(!is_array($page->_values[$parent_key])) {
+							$single_value = $page->_values[$parent_key];
+							$page->_values[$parent_key] = array(
+								array(
+									'value' => $single_value,
+									$child_key => $content
+								)
 							);
+						} else {
+							$i = count($page->_values[$parent_key]) - 1;
+							if(is_array($page->_values[$parent_key][$i])) {
+								$page->_values[$parent_key][$i][$child_key] = $content;
+							} else {
+								$single_value_in_array = $page->_values[$parent_key][$i];
+								$page->_values[$parent_key][$i] = array(
+									'value' => $single_value_in_array,
+									$child_key => $content
+								);
+							}
 						}
 					}
 				}
